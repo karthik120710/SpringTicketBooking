@@ -57,13 +57,13 @@ classDiagram
         -String password
         -String email
         -String role
-        -List~Booking~ bookings
+        -List bookings
         +getId() Long
         +getUsername() String
         +getPassword() String
         +getEmail() String
         +getRole() String
-        +getBookings() List~Booking~
+        +getBookings() List
     }
 
     class Event {
@@ -74,7 +74,7 @@ classDiagram
         -Integer totalSeats
         -Integer availableSeats
         -Double price
-        -List~Booking~ bookings
+        -List bookings
         -Long version
         +getId() Long
         +getName() String
@@ -83,7 +83,7 @@ classDiagram
         +getTotalSeats() Integer
         +getAvailableSeats() Integer
         +getPrice() Double
-        +getBookings() List~Booking~
+        +getBookings() List
         +getVersion() Long
     }
 
@@ -114,9 +114,9 @@ classDiagram
     class UserService {
         -UserRepository userRepository
         -PasswordEncoder passwordEncoder
-        +getAllUsers() List~User~
-        +getUserById(Long) Optional~User~
-        +getUserByUsername(String) Optional~User~
+        +getAllUsers() List
+        +getUserById(Long) Optional
+        +getUserByUsername(String) Optional
         +createUser(User) User
         +updateUser(User) User
         +deleteUser(Long) void
@@ -126,14 +126,14 @@ classDiagram
 
     class EventService {
         -EventRepository eventRepository
-        +getAllEvents() List~Event~
-        +getAvailableEvents() List~Event~
-        +getEventById(Long) Optional~Event~
-        +searchEventsByName(String) List~Event~
+        +getAllEvents() List
+        +getAvailableEvents() List
+        +getEventById(Long) Optional
+        +searchEventsByName(String) List
         +createEvent(Event) Event
         +updateEvent(Event) Event
         +deleteEvent(Long) void
-        +getEventByIdWithLock(Long) Optional~Event~
+        +getEventByIdWithLock(Long) Optional
     }
 
     class BookingService {
@@ -142,11 +142,11 @@ classDiagram
         -UserRepository userRepository
         -ConcurrentHashMap eventLocks
         +bookTicket(Long, Long, Integer) Booking
-        +bookTicketAsync(Long, Long, Integer) CompletableFuture~Booking~
-        +getAllBookings() List~Booking~
-        +getBookingById(Long) Optional~Booking~
-        +getUserBookings(Long) List~Booking~
-        +getEventBookings(Long) List~Booking~
+        +bookTicketAsync(Long, Long, Integer) CompletableFuture
+        +getAllBookings() List
+        +getBookingById(Long) Optional
+        +getUserBookings(Long) List
+        +getEventBookings(Long) List
         +cancelBooking(Long) boolean
         +getBookingCountForEvent(Long) Long
     }
@@ -185,23 +185,23 @@ classDiagram
 
     class UserRepository {
         <<interface>>
-        +findByUsername(String) Optional~User~
+        +findByUsername(String) Optional
         +existsByUsername(String) boolean
         +existsByEmail(String) boolean
     }
 
     class EventRepository {
         <<interface>>
-        +findAvailableEvents() List~Event~
-        +findByNameContaining(String) List~Event~
-        +findByIdWithLock(Long) Optional~Event~
+        +findAvailableEvents() List
+        +findByNameContaining(String) List
+        +findByIdWithLock(Long) Optional
     }
 
     class BookingRepository {
         <<interface>>
-        +findByUserId(Long) List~Booking~
-        +findByEventId(Long) List~Booking~
-        +findByUserUsername(String) List~Booking~
+        +findByUserId(Long) List
+        +findByEventId(Long) List
+        +findByUserUsername(String) List
         +countByEventId(Long) Long
     }
 
